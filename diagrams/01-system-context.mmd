@@ -1,0 +1,27 @@
+flowchart TB
+
+    USER["Enterprise Architect / User"]
+
+    SYSTEM["AI-A02 Multi-Agent System"]
+
+    MODEL["Ollama / Qwen"]
+    REMOTE["Independent A2A Agent"]
+    HUMAN["Human Approver"]
+
+    USER -->|"Submit architecture request"| SYSTEM
+    SYSTEM -->|"Return recommendation"| USER
+
+    SYSTEM -->|"Model inference request"| MODEL
+    MODEL -->|"Model response"| SYSTEM
+
+    SYSTEM -->|"Delegate A2A task"| REMOTE
+    REMOTE -->|"Return assessment"| SYSTEM
+
+    SYSTEM -->|"Request approval"| HUMAN
+    HUMAN -->|"Approval decision"| SYSTEM
+
+    classDef primary fill:#173E45,stroke:#35C49A,color:#FFFFFF
+    classDef external fill:#173A59,stroke:#37B7E5,color:#FFFFFF
+
+    class SYSTEM primary
+    class USER,MODEL,REMOTE,HUMAN external

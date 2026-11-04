@@ -1,0 +1,30 @@
+stateDiagram-v2
+    direction TB
+
+    [*] --> Created
+
+    Created --> Validated: Input valid
+    Created --> Rejected: Invalid request
+
+    Validated --> Planned: Plan accepted
+    Planned --> Running: Assign agents
+
+    Running --> WaitingApproval: Approval required
+    WaitingApproval --> Running: Approved
+    WaitingApproval --> Rejected: Denied
+
+    Running --> Reviewing: Results available
+
+    Reviewing --> Completed: Review accepted
+    Reviewing --> Running: Revision permitted
+    Reviewing --> Failed: Review failed
+
+    Running --> RetryPending: Recoverable error
+    RetryPending --> Running: Retry permitted
+    RetryPending --> Failed: Retry exhausted
+
+    Running --> Failed: Unrecoverable error
+
+    Completed --> [*]
+    Failed --> [*]
+    Rejected --> [*]

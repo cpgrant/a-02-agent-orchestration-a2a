@@ -1,0 +1,69 @@
+flowchart TB
+
+    USER["Enterprise User"]
+
+    subgraph PLATFORM["AI-A02 Multi-Agent Platform"]
+
+        API["FastAPI
+        Request Validation / Task Identity"]
+
+        SUP["LangGraph Supervisor
+        Planning / Routing / Aggregation"]
+
+        subgraph AGENTS["Local Specialist Agents"]
+            RES["Research Agent"]
+            ANA["Analysis Agent"]
+            REV["Review Agent"]
+        end
+
+        GOV["Governance
+        Permissions / Approvals / Audit"]
+
+        DB[("PostgreSQL
+        Task State / Execution Records")]
+
+        OBS["OpenTelemetry
+        Traces / Metrics"]
+
+        LLM["LiteLLM Client"]
+
+    end
+
+    OLLAMA["Ollama / Qwen"]
+
+    subgraph REMOTE["Independent A2A Service"]
+        A2A["A2A Server
+        Agent Card / Task Lifecycle"]
+        RAGENT["Remote Assessment Agent"]
+        A2A --> RAGENT
+    end
+
+    USER --> API
+    API --> SUP
+
+    SUP --> RES
+    SUP --> ANA
+    SUP --> REV
+
+    SUP <-->|"A2A protocol"| A2A
+
+    SUP --> GOV
+    SUP --> DB
+    SUP --> OBS
+
+    RES --> LLM
+    ANA --> LLM
+    REV --> LLM
+
+    LLM --> OLLAMA
+
+    SUP --> API
+    API --> USER
+
+    classDef orchestration fill:#332C53,stroke:#A38BE8,color:#FFFFFF
+    classDef agent fill:#173E45,stroke:#35C49A,color:#FFFFFF
+    classDef service fill:#173A59,stroke:#37B7E5,color:#FFFFFF
+
+    class SUP orchestration
+    class RES,ANA,REV,RAGENT agent
+    class API,GOV,OBS,LLM,A2A service

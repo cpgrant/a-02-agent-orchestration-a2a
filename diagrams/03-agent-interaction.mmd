@@ -1,0 +1,51 @@
+%%{init: {
+  "theme": "default",
+  "sequence": {
+    "actorMargin": 90,
+    "width": 190,
+    "messageMargin": 45,
+    "noteMargin": 20,
+    "mirrorActors": false
+  }
+}}%%
+sequenceDiagram
+    autonumber
+
+    actor User
+    participant API as FastAPI
+    participant SUP as Supervisor
+    participant RES as Research
+    participant ANA as Analysis
+    participant A2A as Remote A2A
+    participant REV as Review
+    participant DB as PostgreSQL
+
+    User->>API: Submit architecture request
+    API->>SUP: Start LangGraph workflow
+    SUP->>DB: Create task record
+
+    SUP->>RES: Gather evidence
+    RES-->>SUP: Research findings
+
+    par Local analysis
+        SUP->>ANA: Evaluate alternatives
+        ANA-->>SUP: Architecture comparison
+    and Remote A2A assessment
+        SUP->>A2A: Delegate task via A2A
+        A2A-->>SUP: Task ID and status
+        SUP->>A2A: Retrieve task result
+        A2A-->>SUP: Assessment artifact
+    end
+
+    SUP->>REV: Validate combined findings
+    REV-->>SUP: Quality assessment
+
+    alt Review accepted
+        SUP->>DB: Store recommendation
+        SUP-->>API: Structured recommendation
+        API-->>User: Final response
+    else Review rejected
+        SUP->>DB: Store rejection
+        SUP-->>API: Escalation required
+        API-->>User: Review failed
+    end
