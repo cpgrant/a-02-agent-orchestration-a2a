@@ -1,0 +1,25 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	research(research)
+	analysis(analysis)
+	review(review)
+	finalize(finalize)
+	reject(reject)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> research;
+	analysis -.-> reject;
+	analysis -. &nbsp;continue&nbsp; .-> review;
+	research -. &nbsp;continue&nbsp; .-> analysis;
+	research -.-> reject;
+	review -.-> finalize;
+	review -.-> reject;
+	finalize --> __end__;
+	reject --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc

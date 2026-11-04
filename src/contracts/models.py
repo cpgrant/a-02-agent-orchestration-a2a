@@ -7,7 +7,7 @@ from enum import Enum
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field
-
+from typing import Literal
 
 class TaskStatus(str, Enum):
     CREATED = "created"
@@ -40,7 +40,7 @@ class AgentResult(BaseModel):
 
 
 class ArchitectureAssessment(BaseModel):
-    option: str = Field(min_length=1)
+    option: Literal["Local LLM", "Managed Cloud AI"]
     advantages: list[str]
     disadvantages: list[str]
     estimated_cost: str
