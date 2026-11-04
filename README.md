@@ -162,10 +162,10 @@ Run automated tests:
 - Parallel multi-agent execution is not implemented.
 - Research findings rely on model knowledge, not verified retrieval.
 - The final recommendation uses an illustrative selection rule.
-- Remote A2A interoperability is planned for Day 3.
+- Remote A2A interoperability is implemented and tested.
 - Production governance and observability are not yet implemented.
 
-## Next — Day 3
+## Next — Day 4
 
 Implement independent agent-to-agent communication using A2A,
 including agent discovery, task delegation, structured artifacts,
