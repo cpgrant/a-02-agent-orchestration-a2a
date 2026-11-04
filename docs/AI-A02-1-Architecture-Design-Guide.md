@@ -1,10 +1,10 @@
 # AI-A02-1 — Architecture & Design Guide
 
-**Project:** AI-A02 — Agent Orchestration & A2A Multi-Agent Collaboration  
-**Portfolio:** AI Architecture  
-**Workstream:** Day 1 of 4 — Architecture & Design  
-**Status:** Design baseline completed  
-**Environment:** Ubuntu WSL2, Python 3.12.3, pyenv  
+**Project:** AI-A02 — Agent Orchestration & A2A Multi-Agent Collaboration
+**Portfolio:** AI Architecture
+**Workstream:** Day 1 of 4 — Architecture & Design
+**Status:** Design baseline completed
+**Environment:** Ubuntu WSL2, Python 3.12.3, pyenv
 **Repository:** a-02-agent-orchestration-a2a
 
 ---
