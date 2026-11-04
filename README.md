@@ -5,7 +5,7 @@ cat > README.md <<'EOF'
 
 ![AI-A02 Architecture Blueprint](infographics/AI-A02-Architecture-Blueprint.png)
 
-*Overall target architecture — Days 1–2 complete; Days 3–4 planned.*
+*Overall target architecture — Days 1–3 complete; Day 4 planned.*
 
 
 Part of the AI Architecture Portfolio.
@@ -21,8 +21,8 @@ Agent-to-Agent (A2A) interoperability.
 Day 3 of 4 completed.
 
 The local multi-agent orchestration system is implemented
-and tested. Remote A2A interoperability remains planned
-for Day 3.
+and tested. Remote A2A interoperability is implemented
+and tested as part of Day 3.
 
 ## Four-Day Delivery
 
@@ -167,9 +167,9 @@ Run automated tests:
 
 ## Next — Day 4
 
-Implement independent agent-to-agent communication using A2A,
-including agent discovery, task delegation, structured artifacts,
-and protocol-level integration tests.
+Validate operational reliability, governance, observability,
+failure recovery, and auditability. Complete the final
+architecture assessment and consolidated project report.
 
 ## License
 
