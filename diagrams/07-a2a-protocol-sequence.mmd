@@ -1,0 +1,63 @@
+---
+config:
+  theme: base
+  sequence:
+    actorMargin: 95
+    width: 175
+    height: 55
+    messageMargin: 45
+    noteMargin: 20
+    boxMargin: 15
+    mirrorActors: false
+  themeVariables:
+    fontFamily: Arial
+    fontSize: 15px
+    primaryColor: "#EAF3FC"
+    primaryBorderColor: "#397AB9"
+    primaryTextColor: "#172B4D"
+    actorBkg: "#EAF3FC"
+    actorBorder: "#397AB9"
+    actorTextColor: "#172B4D"
+    signalColor: "#26364A"
+    signalTextColor: "#26364A"
+    noteBkgColor: "#FFF6D9"
+    noteBorderColor: "#E7C85B"
+---
+sequenceDiagram
+    autonumber
+
+    participant LG as LangGraph
+    participant CL as A2A Client
+    participant SV as A2A Server
+    participant EX as Executor
+    participant AS as Assessment
+    participant RV as Review Agent
+
+    Note over LG,RV: AI-A02 Day 3 — Agent-to-Agent Interoperability
+
+    Note over LG: Research and Analysis completed
+
+    LG->>CL: Delegate assessment
+
+    opt Discovery (demonstrated separately)
+        CL->>SV: GET Agent Card
+        SV-->>CL: Capabilities and skills
+    end
+
+    Note over CL,SV: HTTP JSON-RPC · A2A-Version: 1.0
+
+    CL->>SV: SendMessage
+    SV->>EX: Execute task
+    EX->>AS: Assess architecture
+    AS-->>EX: Structured assessment
+    EX-->>SV: Completed task + artifact
+    SV-->>CL: A2A response
+    CL-->>LG: Validated JSON artifact
+
+    alt Valid assessment
+        LG->>RV: Submit for review
+        RV-->>LG: Review outcome
+        Note over LG: Finalize or reject
+    else Invalid or unavailable
+        Note over LG: Record error and reject
+    end

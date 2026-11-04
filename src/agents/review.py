@@ -4,6 +4,7 @@ from pydantic import ValidationError
 
 from src.contracts.models import ArchitectureAssessment
 from src.orchestrator.state import WorkflowState
+from src.a2a_server.assessment import AssessmentResponse
 
 
 def review_agent(state: WorkflowState) -> dict:
@@ -37,6 +38,29 @@ def review_agent(state: WorkflowState) -> dict:
         except ValidationError:
             comments.append(f"Option {index}: invalid assessment schema")
             approved = False
+
+
+    # Validate the remote A2A assessment when provided.
+    remote = state.get("remote_assessment")
+
+    if remote is not None:
+        try:
+            validated = AssessmentResponse.model_validate(remote)
+
+            if (
+                not validated.strengths
+                or not validated.risks
+                or not validated.recommendation.strip()
+            ):
+                comments.append("Remote A2A assessment is incomplete")
+                approved = False
+            else:
+                comments.append("Remote A2A assessment passed validation")
+
+        except (ValidationError, TypeError, ValueError):
+            comments.append("Remote A2A assessment failed validation")
+            approved = False
+
 
     if approved:
         comments.append("Architecture assessments passed review")

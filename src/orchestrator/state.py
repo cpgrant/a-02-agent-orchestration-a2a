@@ -1,6 +1,6 @@
 """Shared state for the AI-A02 LangGraph workflow."""
 
-from typing import TypedDict
+from typing import NotRequired, TypedDict
 
 
 class WorkflowState(TypedDict):
@@ -11,6 +11,9 @@ class WorkflowState(TypedDict):
     architecture_options: list[dict]
     review_approved: bool
     review_comments: list[str]
+
+    # Day 3: optional remote A2A assessment.
+    remote_assessment: NotRequired[dict]
 
     recommended_option: str
     recommendation_rationale: str

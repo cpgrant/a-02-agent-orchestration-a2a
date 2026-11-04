@@ -8,7 +8,7 @@ from src.agents.analysis import analysis_agent
 from src.agents.review import review_agent
 from src.agents.research_llm import research_llm_agent
 from src.agents.analysis_llm import analysis_llm_agent
-
+from src.agents.remote_a2a import remote_a2a_agent
 
 def route_after_review(state: WorkflowState) -> str:
     """Route based on review outcome."""
@@ -59,7 +59,10 @@ def reject_node(state: WorkflowState) -> dict:
     }
 
 
-def build_workflow(mode: str = "deterministic"):
+def build_workflow(
+    mode: str = "deterministic",
+    use_a2a: bool = False,
+):
     """Build a workflow with selectable agent implementations."""
 
     if mode not in ("deterministic", "llm"):
@@ -76,6 +79,10 @@ def build_workflow(mode: str = "deterministic"):
 
     graph.add_node("research", research_node)
     graph.add_node("analysis", analysis_node)
+
+    if use_a2a:
+        graph.add_node("remote_a2a", remote_a2a_agent)
+
     graph.add_node("review", review_agent)
     graph.add_node("finalize", finalize_node)
     graph.add_node("reject", reject_node)
@@ -91,8 +98,18 @@ def build_workflow(mode: str = "deterministic"):
     graph.add_conditional_edges(
         "analysis",
         route_on_errors,
-        {"continue": "review", "reject": "reject"},
+        {
+            "continue": "remote_a2a" if use_a2a else "review",
+            "reject": "reject",
+        },
     )
+
+    if use_a2a:
+        graph.add_conditional_edges(
+            "remote_a2a",
+            route_on_errors,
+            {"continue": "review", "reject": "reject"},
+        )
 
     graph.add_conditional_edges(
         "review",

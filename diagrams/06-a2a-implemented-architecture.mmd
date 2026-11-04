@@ -1,0 +1,41 @@
+flowchart TB
+    REQ["Enterprise Architecture Request"]
+
+    subgraph LG["LangGraph Orchestration Application"]
+        R["Research Agent"]
+        A["Analysis Agent"]
+        D["Remote A2A Node"]
+        C["A2A Client"]
+        V["Review Agent"]
+        F["Supervisor: Finalize"]
+        X["Supervisor: Reject"]
+
+        R --> A --> D --> C
+        D -->|"Valid result"| V
+        D -->|"Error"| X
+        V -->|"Approved"| F
+        V -->|"Rejected"| X
+    end
+
+    subgraph REMOTE["Independent A2A Service - Port 8001"]
+        CARD["Agent Card"]
+        RPC["HTTP JSON-RPC Endpoint"]
+        EXEC["AgentExecutor"]
+        ASSESS["Architecture Assessment"]
+        ART["Structured JSON Artifact"]
+
+        RPC --> EXEC --> ASSESS --> ART
+    end
+
+    REQ --> R
+    C -->|"SendMessage / A2A 1.0"| RPC
+    ART -->|"Completed Task + Artifact"| D
+    CARD -.->|"Discovery"| C
+
+    classDef agent fill:#E8F2FC,stroke:#397AB9,color:#172B4D
+    classDef remote fill:#E5F4EE,stroke:#28876A,color:#163E31
+    classDef decision fill:#FFF1DB,stroke:#C48B32,color:#5B421E
+
+    class R,A,D,C,V agent
+    class CARD,RPC,EXEC,ASSESS,ART remote
+    class F,X decision
