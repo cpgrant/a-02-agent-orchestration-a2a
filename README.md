@@ -3,6 +3,11 @@ cat > README.md <<'EOF'
 
 **Enterprise Multi-Agent Collaboration**
 
+![AI-A02 Architecture Blueprint](infographics/AI-A02-Architecture-Blueprint.png)
+
+*Overall target architecture — Days 1–2 complete; Days 3–4 planned.*
+
+
 Part of the AI Architecture Portfolio.
 
 ## Objective
