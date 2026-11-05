@@ -73,6 +73,8 @@ Documentation:
 
 ## Day 2 — Multi-Agent Orchestration
 
+![Day 2 — Multi-Agent Orchestration](infographics/AI-A02-2-Multi-Agent-Orchestration.png)
+
 Deliverables:
 
 - Working LangGraph supervisor
@@ -93,6 +95,8 @@ Documentation:
 [Day 2 Multi-Agent Orchestration Guide](docs/AI-A02-2-Orchestration-Guide.md)
 
 ## Day 3 — A2A Interoperability
+
+![Day 3 — A2A Interoperability](infographics/AI-A02-3-A2A-Interoperability.png)
 
 Implemented an independent Architecture Assessment Agent using
 A2A SDK 1.3.0 and A2A Protocol 1.0.
@@ -175,3 +179,11 @@ architecture assessment and consolidated project report.
 
 To be determined.
 EOF
+
+## Day 4 — Validation & Operations
+
+![Day 4 — Validation & Operations](infographics/AI-A02-4-Validation-Operations.png)
+
+*Target architecture — implementation pending.*
+
+Planned Day 4 validation, governance, observability and operations.
