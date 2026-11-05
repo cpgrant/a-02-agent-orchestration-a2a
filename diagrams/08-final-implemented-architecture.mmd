@@ -1,0 +1,67 @@
+flowchart TB
+    CLIENT["CLI / Workflow Request"]
+
+    subgraph APP["AI-A02 — LangGraph Orchestrator"]
+        direction TB
+        RESEARCH["Research Agent"]
+        ANALYSIS["Analysis Agent"]
+        REMOTE["Optional Remote A2A Client"]
+        REVIEW["Review Agent"]
+        POLICY["Python Governance Gate"]
+        FINAL["Finalize"]
+        REJECT["Reject"]
+        HOLD["Approval Hold"]
+
+        RESEARCH --> ANALYSIS
+        ANALYSIS -->|"Local path"| REVIEW
+        ANALYSIS -->|"A2A enabled"| REMOTE
+        REMOTE -->|"Success"| REVIEW
+        RESEARCH -.->|"Error"| REJECT
+        ANALYSIS -.->|"Error"| REJECT
+        REMOTE -.->|"Error"| REJECT
+        REVIEW --> POLICY
+        POLICY -->|"PERMIT"| FINAL
+        POLICY -->|"DENY"| REJECT
+        POLICY -->|"REQUIRE_APPROVAL"| HOLD
+    end
+
+    subgraph EXTERNAL["Independent A2A Service"]
+        CARD["Agent Card"]
+        SERVER["A2A JSON-RPC Server"]
+        ASSESS["Architecture Assessment"]
+        SERVER --> ASSESS
+    end
+
+    subgraph SUPPORT["Operational Evidence"]
+        LOG["Structured JSON Telemetry"]
+        SBOM["CycloneDX SBOM"]
+        AUDIT["pip-audit Results"]
+        INVENTORY["AI Runtime Inventory"]
+    end
+
+    OLLAMA["Ollama / Granite 4.2 8B"]
+
+    CLIENT --> RESEARCH
+    REMOTE <-->|"A2A Protocol 1.0"| SERVER
+    CARD -.-> REMOTE
+    OLLAMA -.->|"LLM mode"| RESEARCH
+    OLLAMA -.->|"LLM mode"| ANALYSIS
+
+    APP -.->|"Execution summary"| LOG
+    SBOM -.-> APP
+    AUDIT -.-> APP
+    INVENTORY -.-> OLLAMA
+
+    classDef core fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef policy fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef terminal fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef reject fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef external fill:#e0e7ff,stroke:#6366f1,color:#312e81
+    classDef evidence fill:#f1f5f9,stroke:#64748b,color:#334155
+
+    class RESEARCH,ANALYSIS,REMOTE,REVIEW core
+    class POLICY,HOLD policy
+    class FINAL terminal
+    class REJECT reject
+    class CARD,SERVER,ASSESS,OLLAMA external
+    class LOG,SBOM,AUDIT,INVENTORY evidence

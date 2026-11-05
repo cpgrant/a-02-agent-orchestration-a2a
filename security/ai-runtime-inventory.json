@@ -1,0 +1,19 @@
+{
+  "inventory_version": "1.0",
+  "generated_at_utc": "2026-11-05T09:07:46.545309+00:00",
+  "project": "AI-A02 Agent Orchestration & A2A",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "python": "3.12.3",
+  "ollama_version": {
+    "exit_code": 0,
+    "output": "ollama version is 0.40.13"
+  },
+  "ollama_models": {
+    "exit_code": 0,
+    "output": "NAME                     ID              SIZE      MODIFIED     \nembeddinggemma-2:270m    c21dd30c1e38    303 MB    46 hours ago    \nqwen3.8:27b              aaee06c39dcf    17 GB     46 hours ago    \ngranite4.2:8b            f586c02fdecd    5.3 GB    46 hours ago    \nnemotron-3.5-bolt:e4b    69f2be39b309    7.9 GB    46 hours ago    \ngemma4:31b               6316f0629137    19 GB     6 months ago"
+  },
+  "gpu": {
+    "exit_code": 0,
+    "output": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 617.42, 24564 MiB"
+  }
+}

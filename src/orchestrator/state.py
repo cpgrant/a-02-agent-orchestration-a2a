@@ -20,3 +20,8 @@ class WorkflowState(TypedDict):
 
     execution_log: list[str]
     errors: list[str]
+
+    # Day 4: governance.
+    requires_human_approval: NotRequired[bool]
+    policy_decision: NotRequired[str]
+    policy_reason: NotRequired[str]

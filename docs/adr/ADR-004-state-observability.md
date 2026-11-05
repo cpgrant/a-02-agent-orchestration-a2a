@@ -1,6 +1,6 @@
 # ADR-004 — State and Observability
 
-Status: Accepted
+Status: Superseded by ADR-005
 
 ## Context
 Multi-agent execution requires task traceability,

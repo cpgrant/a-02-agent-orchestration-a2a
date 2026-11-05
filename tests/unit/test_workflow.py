@@ -32,9 +32,10 @@ def test_workflow_execution_order():
         "Research Agent: completed evidence collection",
         "Analysis Agent: completed architecture comparison",
         "Review Agent: approved",
+        "Governance: PERMIT (GOV-003)",
         "Supervisor: finalized recommendation",
     ]
-
+    assert result["policy_decision"] == "PERMIT"
 
 def test_workflow_rejection():
     """A rejected review must not produce a recommendation."""

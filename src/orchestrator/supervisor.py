@@ -10,11 +10,11 @@ from src.agents.research_llm import research_llm_agent
 from src.agents.analysis_llm import analysis_llm_agent
 from src.agents.remote_a2a import remote_a2a_agent
 
-def route_after_review(state: WorkflowState) -> str:
-    """Route based on review outcome."""
-    if state["review_approved"] and not state["errors"]:
-        return "finalize"
-    return "reject"
+from src.governance.node import (
+    governance_node,
+    route_after_governance,
+    hold_node,
+)
 
 
 def route_on_errors(state: WorkflowState) -> str:
@@ -87,6 +87,9 @@ def build_workflow(
     graph.add_node("finalize", finalize_node)
     graph.add_node("reject", reject_node)
 
+    graph.add_node("governance", governance_node)
+    graph.add_node("hold", hold_node)
+
     graph.add_edge(START, "research")
 
     graph.add_conditional_edges(
@@ -104,6 +107,7 @@ def build_workflow(
         },
     )
 
+
     if use_a2a:
         graph.add_conditional_edges(
             "remote_a2a",
@@ -111,14 +115,22 @@ def build_workflow(
             {"continue": "review", "reject": "reject"},
         )
 
+    graph.add_edge("review", "governance")
+
     graph.add_conditional_edges(
-        "review",
-        route_after_review,
-        {"finalize": "finalize", "reject": "reject"},
+        "governance",
+        route_after_governance,
+        {
+            "finalize": "finalize",
+            "reject": "reject",
+            "hold": "hold",
+        },
     )
+
 
     graph.add_edge("finalize", END)
     graph.add_edge("reject", END)
+    graph.add_edge("hold", END)
 
     return graph.compile()
 

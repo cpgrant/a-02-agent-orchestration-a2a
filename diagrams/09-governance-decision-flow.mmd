@@ -1,0 +1,51 @@
+flowchart TD
+    START(["Workflow Started"])
+    RESEARCH["Research Agent"]
+    ANALYSIS["Analysis Agent"]
+    A2A{"Remote A2A enabled?"}
+    REMOTE["Remote A2A Assessment"]
+    REVIEW["Review Agent"]
+    ERRORS{"Agent errors?"}
+    POLICY["Evaluate Governance Policy"]
+    DECISION{"Policy decision"}
+    FINAL["Finalize Recommendation"]
+    REJECT["Reject Recommendation"]
+    HOLD["Hold — Human Approval Required"]
+    END(["END"])
+
+    START --> RESEARCH
+    RESEARCH --> E1{"Errors?"}
+    E1 -->|"Yes"| REJECT
+    E1 -->|"No"| ANALYSIS
+
+    ANALYSIS --> E2{"Errors?"}
+    E2 -->|"Yes"| REJECT
+    E2 -->|"No"| A2A
+
+    A2A -->|"Yes"| REMOTE
+    A2A -->|"No"| REVIEW
+
+    REMOTE --> ERRORS
+    ERRORS -->|"Yes"| REJECT
+    ERRORS -->|"No"| REVIEW
+
+    REVIEW --> POLICY
+    POLICY --> DECISION
+
+    DECISION -->|"PERMIT"| FINAL
+    DECISION -->|"DENY"| REJECT
+    DECISION -->|"REQUIRE_APPROVAL"| HOLD
+
+    FINAL --> END
+    REJECT --> END
+    HOLD --> END
+
+    classDef agent fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef success fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef failure fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+
+    class RESEARCH,ANALYSIS,REMOTE,REVIEW agent
+    class E1,E2,A2A,ERRORS,POLICY,DECISION,HOLD decision
+    class FINAL success
+    class REJECT failure
