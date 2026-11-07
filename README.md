@@ -7,6 +7,50 @@
 
 A four-day enterprise AI architecture and engineering proof of concept demonstrating governed multi-agent orchestration, independent A2A interoperability, local LLM inference and operational validation.
 
+
+## Quick Start
+
+AI-A02 demonstrates governed multi-agent orchestration,
+local LLM inference and independent A2A interoperability.
+
+### 1. Activate the environment
+
+```bash
+cd ~/development/ai-projects/a-02-agent-orchestration-a2a
+source .venv/bin/activate
+```
+
+### 2. Run the deterministic workflow
+
+```bash
+python -m scripts.run_workflow --mode deterministic
+```
+
+### 3. Run the LLM-backed workflow
+
+Ensure Ollama is running and Granite 4.2 8B is available.
+
+```bash
+sudo systemctl start ollama
+python -m scripts.run_workflow --mode llm
+```
+
+### 4. Run the automated tests
+
+```bash
+python -m pytest -q
+```
+
+### 5. Run the independent A2A service
+
+See the [Operations Runbook](docs/AI-A02-Operations-Runbook.md)
+for server startup, client execution, validation, troubleshooting
+and safe shutdown instructions.
+
+**Full documentation:**
+[AI-A02 Operations Runbook](docs/AI-A02-Operations-Runbook.md)
+
+
 ## Project Status
 
 **Days 1–4: Implementation and validation complete.**
